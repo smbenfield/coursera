@@ -1,0 +1,1 @@
+# To determine basic numerology of names
