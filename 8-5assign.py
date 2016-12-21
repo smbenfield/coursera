@@ -7,21 +7,14 @@ delimiter = "/n"
 fname = raw_input("Enter file name: ")
 fname = "mbox-short.txt"
 fh = open(fname)
-fread = fh.read()
-fline = fread.split(delimiter)
-print fline
-fleng = len(fline)
-print fleng
-for line in fline:
+
+for line in fh:
 	test += 1
-	if line.startswith("From "):
-		lsplt = line.split()
-		lword = lsplt[1]
-		email.append(lword)
-		print "Appended"
-		count += 1
-for item in email:
-	print email[numbr]
+	lsplt = line.rstrip()
+	if not line.startswith("From "): continue
+	lword = lsplt.split(" ")
+	email.append(lword[1])
+	count += 1
 	numbr +=1
 print test
 print email
