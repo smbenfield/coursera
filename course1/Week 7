@@ -1,0 +1,28 @@
+num = 0
+number = float(num)
+largest = None
+smallest = number
+
+while True:
+    try:
+	    num = raw_input("Enter a number: ")
+    	if num == "done": 
+        	print "Thanks"
+        	break
+	    else:
+    	    number = float(num)
+            
+		if number >= largest:
+			largest = number
+        	print number
+		elif number <= smallest:
+    	    smallest = number
+    	    print number
+		else:
+        	print "error3"
+	    	print num
+	except ValueError:
+        print "I'm sorry, that's not a valid number."
+
+print "Maximum is", largest
+print "Minimum is", smallest
