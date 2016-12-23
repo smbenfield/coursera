@@ -16,6 +16,13 @@ for line in hand:
     if re.search('^From:', line): # ^ means starts with
         print line
 
+# Uses findall
+hand = open('mbox-short.txt')
+numb = re.findall('[0-9+]', hand)
+
+print numb
+
+
 # Repeat characters (* +) return as large of a string as possible - greedy
 # (?) Does not do greedy matching
 # \$ = Real $ sign
