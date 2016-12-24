@@ -4,10 +4,10 @@ import socket
 # Builds porthole = library.method(internet socket that is stream socket)
 mysock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 # Opens porthole = create connection to (website/host, port)
-mysock.connect(('www.py4inf.com', 80))
+mysock.connect(('data.pr4e.org', 80))
 
 # Data to be sent
-mysock.send('GET http://www.py4inf.com/code/romeo.txt HTTP/1.0\n\n')
+mysock.send('GET http://data.pr4e.org/intro-short.txt HTTP/1.0\n\n')
 
 # Receiving/Reading - If nothing, the loop ends
 while True:
@@ -18,10 +18,17 @@ while True:
 
 mysock.close()
 
-# Imports urllib library
-import urllib
+# you can parse out the strings from an html page you find
+# Scraping/Crawling - writing apps to parse out the urls and
+# loop/for through the page.
 
-fhand = urllib.urlopen('http://www.py4inf.com/code/romeo.txt')
+# Reasons?
+# Pull data, making up for export capability, site monitoring, social
 
-for line in fhand:
-    print line.strip()
+# Parsing html
+html = urllib.urlopen(url).read()
+soup = BeautifulSoup(html)
+
+tags = soup('a')
+for tag in tags:
+    print tag.get('href', None)
