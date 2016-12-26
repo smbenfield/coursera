@@ -14,10 +14,14 @@ input = '''
         </users>
 </stuff>'''
 
+# Creates object
 stuff = ET.fromstring(input)
+# Creates list of all instances of user within users
 lst = stuff.findall('users/user')
+# Prints length of list
 print 'User count:', len(lst)
 
+#Loops through list and prints attributes and such of users
 for item in lst:
     print 'Name', item.find('name').text
     print 'Id', item.find('id').text
