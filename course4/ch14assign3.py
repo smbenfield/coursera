@@ -1,7 +1,7 @@
 import xml.etree.ElementTree as ET
 import sqlite3
 
-conn = sqlite3.connect('itunessql.sqlite')
+conn = sqlite3.connect('library.sqlite')
 cur = conn.cursor()
 
 cur.executescript('''
@@ -63,7 +63,7 @@ for entry in all:
     length = lookup(entry, 'Total Time')
     genre = lookup(entry, 'Genre')
 
-    if name is None or artist is None or album is None:
+    if name is None or artist is None or album is None or genre is None:
         continue
 
     print name, artist, album, count, rating, length, genre
