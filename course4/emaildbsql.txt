@@ -1,0 +1,5 @@
+'''DROP TABLE IF EXISTS Counts'''
+
+'''CREATE TABLE Counts (email TEXT, count INTEGER)'''
+
+'''INSERT INTO Counts SET count = count + 1 WHERE email = ?'''
