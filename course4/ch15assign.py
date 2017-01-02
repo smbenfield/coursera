@@ -27,33 +27,38 @@ cur.executescript('''
     CREATE TABLE Member(
         user_id INTEGER,
         course_id INTEGER,
-            role    INTEGER,
+        role    INTEGER,
         PRIMARY KEY (user_id, course_id)
     )''')
 
-cur.executescript('''
+filename = raw_input('Enter filename:')
+if len(filename) < 1 :
+    filename = 'roster_data.json'
 
-    INSERT INTO User (name, email) VALUES('Jane', 'jane@tsugi.org');
-    INSERT INTO User (name, email) VALUES('Ed', 'ed@tsugi.org');
-    INSERT INTO User (name, email) VALUES('Sue', 'sue@tsugi.org');
-    INSERT INTO Course (title) VALUES ('Python');
-    INSERT INTO Course (title) VALUES ('SQL');
-    INSERT INTO Course (title) VALUES ('PHP')
-    ''')
+str_data = open(filename).read()
+json_data = json.loads(str_data)
 
-cur.executescript('''
-    INSERT INTO Member (user_id, course_id, role) VALUES (1,1,1);
-    INSERT INTO Member (user_id, course_id, role) VALUES (2,1,0);
-    INSERT INTO Member (user_id, course_id, role) VALUES (3,1,0);
+for entry in json_data:
+    name = entry[0];
+    title = entry [1];
+    role = entry [2]
+    print name, title, role
 
-    INSERT INTO Member (user_id, course_id, role) VALUES (1,2,0);
-    INSERT INTO Member (user_id, course_id, role) VALUES (2,2,1);
+    cur.execute('''INSERT OR IGNORE INTO User (name)
+        VALUES (?)''', (name, ))
+    cur.execute('SELECT id FROM User WHERE name = ?', (name,))
+    user_id = cur.fetchone() [0]
 
-    INSERT INTO Member (user_id, course_id, role) VALUES (2,3,1);
-    INSERT INTO Member (user_id, course_id, role) VALUES (3,3,0);
-    ''')
+    cur.execute('''INSERT OR IGNORE INTO Course (title)
+        VALUES (?)''', (title, ))
+    cur.execute('SELECT id FROM Course WHERE title = ?', (title,))
+    course_id = cur.fetchone() [0]
 
-cur.executescript('''
+    cur.execute('''INSERT OR REPLACE INTO Member
+        (user_id, course_id, role) VALUES (?,?,?)''',
+        (user_id, course_id, role))
+
+cur.execute('''
     SELECT User.name, Member.role, Course.title
     FROM User JOIN Member JOIN Course
     ON Member.user_id = User.id AND Member.course_id = Course.id
